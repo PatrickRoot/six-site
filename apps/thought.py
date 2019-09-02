@@ -10,5 +10,15 @@ PURPOSE.
 See the Mulan PSL v1 for more details.
 """
 
-db_path = "/Users/patrick/six_myspace/python/six-site/data.db"
-page_size = 10
+from flask import Blueprint, render_template
+
+from config.config import page_size
+from config.db import run_select
+
+app_thought = Blueprint('app_thought', __name__)
+
+
+@app_thought.route("/<int:id>")
+def thought(id):
+    return str(id)+":---"
+

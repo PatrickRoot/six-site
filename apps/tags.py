@@ -15,24 +15,23 @@ from flask import Blueprint, render_template
 from config.config import page_size
 from config.db import run_select
 
-app_posts = Blueprint('app_posts', __name__)
+app_tags = Blueprint('app_tags', __name__)
 
 
-# 分页
-@app_posts.route("/")
-def index():
-    posts_list = posts_by_num(1)
+# 标签
+@app_tags.route("/<tag_name>")
+def tags(tag_name):
+    posts_list = posts_by_tag(tag_name, 1)
     return render_template('posts/list.html', posts_list=posts_list)
 
 
-@app_posts.route("/<int:page_num>")
-def pages_page(page_num):
-    posts_list = posts_by_num(page_num)
+@app_tags.route("/<tag_name>/<int:page_num>")
+def tags_page(tag_name, page_num):
+    posts_list = posts_by_tag(tag_name, page_num)
     return render_template('posts/list.html', posts_list=posts_list)
 
 
-# 查询
-def posts_by_num(page_num):
+def posts_by_tag(tag_name, page_num):
     limit_begin = (page_num - 1) * page_size
 
     return run_select('''

@@ -15,30 +15,33 @@ from flask import Blueprint, render_template
 from config.config import page_size
 from config.db import run_select
 
-app_posts = Blueprint('app_posts', __name__)
+app_types = Blueprint('app_types', __name__)
 
-
-# 分页
-@app_posts.route("/")
-def index():
-    posts_list = posts_by_num(1)
+# 分类
+@app_types.route("/<type_name>")
+def types(type_name):
+    posts_list = posts_by_type(type_name, 1)
     return render_template('posts/list.html', posts_list=posts_list)
 
 
-@app_posts.route("/<int:page_num>")
-def pages_page(page_num):
-    posts_list = posts_by_num(page_num)
+@app_types.route("/<type_name>/<int:page_num>")
+def types_page(type_name, page_num):
+    posts_list = posts_by_type(type_name, page_num)
     return render_template('posts/list.html', posts_list=posts_list)
 
 
-# 查询
-def posts_by_num(page_num):
+def posts_by_type(type_name, page_num):
     limit_begin = (page_num - 1) * page_size
 
     return run_select('''
 select *
 from app_posts
 where post_status = '1'
+and post_type = '%s'
 order by create_time desc 
 limit %d,%d
-    ''' % (limit_begin, page_size))
+    ''' % (type_name, limit_begin, page_size))
+
+
+if __name__ == '__main__':
+    print(posts_by_type("blog",1))
