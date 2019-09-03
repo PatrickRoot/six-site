@@ -10,15 +10,21 @@ PURPOSE.
 See the Mulan PSL v1 for more details.
 """
 
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, redirect, url_for
 
-from config.config import page_size
-from config.db import run_select
+from config.db import run_select_one
 
 app_thought = Blueprint('app_thought', __name__)
 
 
+@app_thought.route("/")
+def thought_index():
+    return redirect(url_for('app_thoughts.index'))
+
+
 @app_thought.route("/<int:id>")
 def thought(id):
-    return str(id)+":---"
-
+    app_posts = run_select_one('''
+    select * from app_posts where id = %d
+    ''' % id)
+    return render_template('thoughts/thought.html', app_posts=app_posts)

@@ -12,33 +12,15 @@ See the Mulan PSL v1 for more details.
 
 from flask import Blueprint, render_template
 
-from config.config import page_size
-from config.db import run_select
-
 app_posts = Blueprint('app_posts', __name__)
 
 
 # 分页
-@app_posts.route("/")
+@app_posts.route("/add")
 def index():
-    posts_list = posts_by_num(1)
-    return render_template('posts/list.html', posts_list=posts_list)
+    return "add"
 
 
-@app_posts.route("/<int:page_num>")
+@app_posts.route("/submit")
 def pages_page(page_num):
-    posts_list = posts_by_num(page_num)
-    return render_template('posts/list.html', posts_list=posts_list)
-
-
-# 查询
-def posts_by_num(page_num):
-    limit_begin = (page_num - 1) * page_size
-
-    return run_select('''
-select *
-from app_posts
-where post_status = '1'
-order by create_time desc 
-limit %d,%d
-    ''' % (limit_begin, page_size))
+    return "submit"

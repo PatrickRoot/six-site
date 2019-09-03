@@ -44,3 +44,20 @@ def run_select(sql):
     conn.close()
 
     return result
+
+
+def run_select_one(sql):
+    result = []
+    conn = sqlite3.connect(db_path)
+    conn.row_factory = dict_factory
+    cur = conn.cursor()
+
+    for row in cur.execute(sql):
+        result.append(row)
+
+    conn.close()
+
+    if len(result) > 0:
+        return result[0]
+    else:
+        return None

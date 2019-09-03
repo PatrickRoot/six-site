@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS app_posts
     id INTEGER primary key autoincrement,
     post_type TEXT,
     post_title TEXT,
+    post_summary TEXT,
     post_content TEXT,
     post_content_origin TEXT,
     post_status TEXT,

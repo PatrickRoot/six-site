@@ -203,7 +203,7 @@ a {
 
     /* Move the layout over so we can fit the nav + list in on the left */
     #layout {
-        padding-left:500px; /* "left col (nav + list)" width */
+        /*padding-left:500px; !* "left col (nav + list)" width *!*/
         position: relative;
     }
 
@@ -215,7 +215,7 @@ a {
         overflow: auto;
     }
     #nav {
-        margin-left:-500px; /* "left col (nav + list)" width */
+        /*margin-left:-500px; !* "left col (nav + list)" width *!*/
         width:150px;
         height: 100%;
     }
@@ -232,20 +232,17 @@ a {
     }
 
     #list {
-        margin-left: -350px;
+        margin-left: 150px;
         width: 100%;
         height: 33%;
         border-bottom: 1px solid #ddd;
     }
 
     #main {
-        position: fixed;
-        top: 33%;
-        right: 0;
-        bottom: 0;
-        left: 150px;
-        overflow: auto;
-        width: auto; /* so that it's not 100% */
+        margin-left: 150px;
+        width: 100%;
+        height: 33%;
+        border-bottom: 1px solid #ddd;
     }
 
 }
@@ -259,7 +256,7 @@ a {
 
     /* This will take up the entire height, and be a little thinner */
     #list {
-        margin-left: -350px;
+        margin-left: 150px;
         width: 100%;
         height: 100%;
         border-right: 1px solid #ddd;
@@ -267,13 +264,18 @@ a {
 
     /* This will now take up it's own column, so don't need position: fixed; */
     #main {
-        position: static;
-        margin: 0;
-        padding: 0;
+        margin-left: 150px;
+        width: 100%;
+        height: 100%;
+        border-right: 1px solid #ddd;
     }
 }
 
 #layout .main-content{
     padding: 10px;
     background: #eeeeee;
+}
+
+.email-content{
+    background: #ffffff;
 }

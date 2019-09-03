@@ -15,8 +15,9 @@ from flask import Flask, render_template
 from apps.posts import app_posts
 from apps.tags import app_tags
 from apps.thought import app_thought
-from apps.types import app_types
+from apps.thoughts import app_thoughts
 from apps.users import app_users
+from config.db import run_sql
 from config.init import init_table
 
 init_table()
@@ -24,14 +25,36 @@ app = Flask(__name__)
 
 app.register_blueprint(app_posts, url_prefix='/posts')
 app.register_blueprint(app_tags, url_prefix='/tags')
-app.register_blueprint(app_types, url_prefix='/types')
-app.register_blueprint(app_users, url_prefix='/users')
 app.register_blueprint(app_thought, url_prefix='/thought')
+app.register_blueprint(app_thoughts, url_prefix='/thoughts')
+app.register_blueprint(app_users, url_prefix='/users')
 
 
 @app.route('/')
-def hello_world():
-    return render_template('index.html')
+def index():
+    return "首页"
+
+
+@app.route("/init")
+def init():
+
+    run_sql('''
+update app_posts set post_type = 'blog' where post_type = '0'
+    ''')
+
+    run_sql('''
+update app_posts set post_type = 'forum' where post_type = '1'
+    ''')
+    run_sql('''
+update app_posts set post_type = 'mine' where post_type = '2'
+    ''')
+
+    return """
+    INSERT INTO app_posts 
+    (post_type, post_title, post_content, post_status, view_count, thumb_count, comment_count, create_user, create_time, post_content_origin)
+     VALUES 
+    ('blog', 'b1', 'c1', '1', 0, 0, 0, 'user', '', null)
+    """
 
 
 if __name__ == '__main__':
