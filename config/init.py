@@ -38,6 +38,7 @@ CREATE TABLE IF NOT EXISTS app_posts
     post_type TEXT,
     post_title TEXT,
     post_content TEXT,
+    post_content_origin TEXT,
     post_status TEXT,
     view_count INTEGER,
     thumb_count INTEGER,

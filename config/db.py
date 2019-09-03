@@ -15,11 +15,18 @@ import sqlite3
 from config.config import db_path
 
 
+def dict_factory(cursor, row):
+    d = {}
+    for idx, col in enumerate(cursor.description):
+        d[col[0]] = row[idx]
+    return d
+
+
 def run_sql(sql):
     conn = sqlite3.connect(db_path)
-    c = conn.cursor()
+    cur = conn.cursor()
 
-    c.execute(sql)
+    cur.execute(sql)
 
     conn.commit()
     conn.close()
@@ -28,9 +35,10 @@ def run_sql(sql):
 def run_select(sql):
     result = []
     conn = sqlite3.connect(db_path)
-    c = conn.cursor()
+    conn.row_factory = dict_factory
+    cur = conn.cursor()
 
-    for row in c.execute(sql):
+    for row in cur.execute(sql):
         result.append(row)
 
     conn.close()

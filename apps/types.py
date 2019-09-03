@@ -34,7 +34,9 @@ def posts_by_type(type_name, page_num):
     limit_begin = (page_num - 1) * page_size
 
     return run_select('''
-select *
+select 
+id as id,
+post_type as postType
 from app_posts
 where post_status = '1'
 and post_type = '%s'
@@ -42,6 +44,3 @@ order by create_time desc
 limit %d,%d
     ''' % (type_name, limit_begin, page_size))
 
-
-if __name__ == '__main__':
-    print(posts_by_type("blog",1))
