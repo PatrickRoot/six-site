@@ -15,7 +15,12 @@
 <body>
 <div id="layout" class="content pure-g">
     <div id="nav" class="pure-u">
-        <a href="#" class="nav-menu-button">Menu</a>
+        <a href="#" id="j-h5-menu" class="nav-menu-button">Menu</a>
+        <script>
+            $("#j-h5-menu").click(function () {
+                $("#nav").toggleClass("active");
+            });
+        </script>
 
         <div class="nav-inner">
             <a href="{{ url_for('index') }}" class="primary-button pure-button">六楼实验室</a>
