@@ -12,8 +12,7 @@ See the Mulan PSL v1 for more details.
 
 from flask import Blueprint, render_template
 
-from config.config import page_size
-from config.db import run_select
+from models.posts import posts_by_num, count_num, posts_by_tag, count_num_by_type, render_list
 
 app_thoughts = Blueprint('app_thoughts', __name__)
 
@@ -22,43 +21,27 @@ app_thoughts = Blueprint('app_thoughts', __name__)
 @app_thoughts.route("/")
 def index():
     posts_list = posts_by_num(1)
-    return render_template('thoughts/list.html', posts_list=posts_list)
+    total_number = count_num()
+    return render_list(posts_list=posts_list, category="p", page_num=1, total_number=total_number)
+
+
+@app_thoughts.route("/p/<int:page_num>")
+def index_list(page_num):
+    posts_list = posts_by_num(page_num)
+    total_number = count_num()
+    return render_list(posts_list=posts_list, category="p", page_num=page_num, total_number=total_number)
 
 
 # 标签
-@app_thoughts.route("/<string:post_type>/")
+@app_thoughts.route("/t/<string:post_type>/")
 def thoughts_list(post_type):
     posts_list = posts_by_tag(post_type, 1)
-    return render_template('thoughts/list.html', posts_list=posts_list)
+    total_number = count_num_by_type(post_type)
+    return render_list(posts_list=posts_list, category="t/" + post_type, page_num=1, total_number=total_number)
 
 
-@app_thoughts.route("/<string:post_type>/<int:page_num>")
+@app_thoughts.route("/t/<string:post_type>/<int:page_num>")
 def thoughts_lists(post_type, page_num):
     posts_list = posts_by_tag(post_type, page_num)
-    return render_template('thoughts/list.html', posts_list=posts_list)
-
-
-def posts_by_tag(post_type, page_num):
-    limit_begin = (page_num - 1) * page_size
-
-    return run_select('''
-select *
-from app_posts
-where post_status = '1'
-and post_type = '%s'
-order by create_time desc 
-limit %d,%d
-    ''' % (post_type, limit_begin, page_size))
-
-
-# 查询
-def posts_by_num(page_num):
-    limit_begin = (page_num - 1) * page_size
-
-    return run_select('''
-select *
-from app_posts
-where post_status = '1'
-order by create_time desc 
-limit %d,%d
-    ''' % (limit_begin, page_size))
+    total_number = count_num_by_type(post_type)
+    return render_list(posts_list=posts_list, category="t/" + post_type, page_num=page_num, total_number=total_number)

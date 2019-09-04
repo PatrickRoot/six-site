@@ -10,5 +10,5 @@ PURPOSE.
 See the Mulan PSL v1 for more details.
 """
 
-db_path = "/Users/patrick/six_myspace/python/six-site/data.db"
+db_path = "/Users/patrickroot/six_myspace/python/six-site/data.db"
 page_size = 10
