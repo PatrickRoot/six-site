@@ -43,7 +43,7 @@ a {
  * -- LAYOUT STYLES --
  * This layout consists of three main elements, `#nav` (navigation bar), `#list` (email list), and `#main` (email content). All 3 elements are within `#layout`
  */
-#layout, #nav, #list, #main {
+#layout, #nav, #main {
     margin: 0;
     padding: 0;
 }
@@ -252,13 +252,6 @@ a {
         display: none;
     }
 
-    #list {
-        margin-left: 150px;
-        width: 100%;
-        height: 33%;
-        border-bottom: 1px solid #ddd;
-    }
-
     #main {
         margin-left: 150px;
         width: 100%;
@@ -274,14 +267,6 @@ a {
  * of the mobile styles.
  */
 @media (min-width: 60em) {
-
-    /* This will take up the entire height, and be a little thinner */
-    #list {
-        margin-left: 150px;
-        width: 100%;
-        height: 100%;
-        border-right: 1px solid #ddd;
-    }
 
     /* This will now take up it's own column, so don't need position: fixed; */
     #main {
@@ -299,4 +284,9 @@ a {
 
 .email-content {
     background: #ffffff;
+}
+
+#footer{
+    background: #ffffff;
+    border-top: 1px solid #eeeeee;
 }

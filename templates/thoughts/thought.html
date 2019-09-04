@@ -14,17 +14,16 @@
 
 {% block main %}
 
-    <div id="main" class="pure-u-1 main-content">
-        <div class="email-content">
-            <div class="email-content-header pure-g">
-                <div class="pure-u-1-2">
-                    <h1 class="email-content-title">{{ app_posts.post_title }}</h1>
-                    <p class="email-content-subtitle">
-                        <span>{{ app_posts.create_time }}</span>
-                        ·
-                        <a href="{{ url_for('app_users.username', username=app_posts.create_user) }}">{{ app_posts.create_user }}</a>
-                    </p>
-                </div>
+    <div class="email-content">
+        <div class="email-content-header pure-g">
+{#            <div class="pure-u-1-2">#}
+                <h1 class="email-content-title">{{ app_posts.post_title }}</h1>
+                <p class="email-content-subtitle">
+                    <span>{{ app_posts.create_time }}</span>
+                    ·
+                    <a href="{{ url_for('app_users.username', username=app_posts.create_user) }}">{{ app_posts.create_user }}</a>
+                </p>
+{#            </div>#}
 
 {#                <div class="email-content-controls pure-u-1-2">#}
 {#                    <button class="secondary-button pure-button">Reply</button>#}
@@ -32,15 +31,14 @@
 {#                    <button class="secondary-button pure-button">Move to</button>#}
 {#                </div>#}
 
-            </div>
+        </div>
 
-            <div class="email-content-body">
-                {{ app_posts.post_content|safe }}
-                <br/>
-                <h2>
-                    评论功能开发中
-                </h2>
-            </div>
+        <div class="email-content-body">
+            {{ app_posts.post_content|safe }}
+            <br/>
+            <h2>
+                评论功能开发中
+            </h2>
         </div>
     </div>
 
