@@ -58,7 +58,7 @@ and post_type = '%s'
     ''' % post_type)['count']
 
 
-def render_list(posts_list, category, page_num, total_number):
+def render_list(posts_list, url_prefix, page_num, total_number):
     total_page = (total_number + page_size - 1) // page_size
 
     begin = page_num - 2
@@ -73,7 +73,7 @@ def render_list(posts_list, category, page_num, total_number):
 
     return render_template('thoughts/list.html',
                            posts_list=posts_list,
-                           category=category,
+                           url_prefix=url_prefix,
                            page_no=page_num,
                            begin=begin,
                            end=end,

@@ -33,23 +33,23 @@
     <div class="email-item pure-g">
         <div class="email-content-controls">
             {% if begin > 1 %}
-                <a href="{{ url_for('app_thoughts.index') }}{{ category }}/1" class="secondary-button pure-button">1</a>
+                <a href="{{ url_prefix }}1" class="secondary-button pure-button">1</a>
                 |
             {% endif %}
             {% for foo in range(begin,end) %}
                 {% if foo == page_no %}
                     <a href="###" class="secondary-button pure-button" disabled="true">{{ foo }}</a>
                 {% else %}
-                    <a href="{{ url_for('app_thoughts.index') }}{{ category }}/{{ foo }}" class="secondary-button pure-button">{{ foo }}</a>
+                    <a href="{{ url_prefix }}{{ foo }}" class="secondary-button pure-button">{{ foo }}</a>
                 {% endif %}
             {% endfor %}
             {% if end <= total_page %}
                 |
-                <a href="{{ url_for('app_thoughts.index') }}{{ category }}/{{ total_page }}" class="secondary-button pure-button">{{ total_page }}</a>
+                <a href="{{ url_prefix }}{{ total_page }}" class="secondary-button pure-button">{{ total_page }}</a>
             {% endif %}
 {#                |#}
 {#                <a href="###" class="secondary-button pure-button" disabled="true">{{ total_num }}</a>篇#}
         </div>
     </div>
-    
+
 {% endblock %}

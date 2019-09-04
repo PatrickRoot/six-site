@@ -10,7 +10,7 @@ PURPOSE.
 See the Mulan PSL v1 for more details.
 """
 
-from flask import Flask
+from flask import Flask, url_for
 
 from apps.posts import app_posts
 from apps.tags import app_tags
@@ -35,7 +35,7 @@ app.register_blueprint(app_users, url_prefix='/users')
 def index():
     posts_list = posts_by_num(1)
     total_number = count_num()
-    return render_list(posts_list=posts_list, category="p", page_num=1, total_number=total_number)
+    return render_list(posts_list=posts_list, url_prefix=url_for("app_thoughts.index")+"p/", page_num=1, total_number=total_number)
 
 
 @app.route("/init")
