@@ -32,7 +32,7 @@ app.register_blueprint(app_posts, url_prefix='/posts')
 app.register_blueprint(app_tags, url_prefix='/tags')
 app.register_blueprint(app_thought, url_prefix='/thought')
 app.register_blueprint(app_thoughts, url_prefix='/thoughts')
-app.register_blueprint(app_users, url_prefix='/users')
+app.register_blueprint(app_users, url_prefix='/user')
 
 
 @app.route('/')

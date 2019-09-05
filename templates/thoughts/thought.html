@@ -20,7 +20,7 @@
             <p class="email-content-subtitle">
                 <span>{{ app_posts.create_time }}</span>
                 ·
-                <a href="{{ url_for('app_users.username', username=app_posts.create_user) }}">{{ app_posts.create_user }}</a>
+                <a href="{{ url_for('app_users.info', username=app_posts.create_user) }}">{{ app_posts.create_user }}</a>
                 {% if app_tags|length %}
                     ·
                 {% endif %}

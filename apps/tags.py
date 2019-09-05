@@ -39,31 +39,31 @@ def tags_page(tag_code, page_num):
 
 def count_num_by_tag(tag_code):
     return select_one('''
-    select count(1) as count
-from app_posts ap
-where ap.post_status = '1'
-  and exists(
-        select 1
-        from app_posts_tags apt
-        where apt.post_id = ap.id
-          and apt.tag_code = '%s'
-    )
-    ''' % tag_code)['count']
+            select count(1) as count
+            from app_posts ap
+            where ap.post_status = '1'
+              and exists(
+                    select 1
+                    from app_posts_tags apt
+                    where apt.post_id = ap.id
+                      and apt.tag_code = '%s'
+                )
+        ''' % tag_code)['count']
 
 
 def posts_by_tag(tag_name, page_num):
     limit_begin = (page_num - 1) * page_size
 
     return select_list('''
-select ap.*
-from app_posts ap
-where ap.post_status = '1'
-  and exists(
-        select 1
-        from app_posts_tags apt
-        where apt.post_id = ap.id
-          and apt.tag_code = '%s'
-    )
-order by ap.create_time desc 
-limit %d,%d
-    ''' % (tag_name, limit_begin, page_size))
+            select ap.*
+            from app_posts ap
+            where ap.post_status = '1'
+              and exists(
+                    select 1
+                    from app_posts_tags apt
+                    where apt.post_id = ap.id
+                      and apt.tag_code = '%s'
+                )
+            order by ap.create_time desc 
+            limit %d,%d
+        ''' % (tag_name, limit_begin, page_size))

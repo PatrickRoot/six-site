@@ -98,3 +98,22 @@ CREATE index IF NOT EXISTS app_posts_tags_index_post_id on app_posts_tags (post_
     run_sql('''
 CREATE index IF NOT EXISTS app_posts_tags_index_tag_code on app_posts_tags (tag_code);
     ''')
+
+    # 创建 app_user
+    run_sql('''
+    CREATE TABLE IF NOT EXISTS app_user
+(
+    id INTEGER primary key autoincrement,
+    username INTEGER,
+    password TEXT,
+    bio TEXT,
+    intro TEXT,
+    create_user TEXT,
+    create_time TEXT
+);
+    ''')
+
+    # app_user 索引
+    run_sql('''
+CREATE index IF NOT EXISTS app_user_index_username on app_user (username);
+    ''')

@@ -1,0 +1,34 @@
+{% extends 'frame/index.html' %}
+
+{% block title %}{{ user.username }}{% endblock %}
+
+{% block keywords %}{{ user.username }},{% endblock %}
+
+{#{% block description %}{{ app_posts.post_title }},{% endblock %}#}
+
+{#{% block header %}#}
+{#    <style type="text/css">#}
+{##}
+{#    </style>#}
+{#{% endblock %}#}
+
+{% block main %}
+
+    <div class="email-content">
+        <div class="email-content-header">
+            <h1 class="email-content-title">{{ user.username }}</h1>
+            <p class="email-content-subtitle">
+                <span>{{ user.bio }}</span>
+            </p>
+        </div>
+
+        <div class="email-content-body">
+            {{ user.intro|safe }}
+            <br/>
+            <h2>
+                评论功能开发中
+            </h2>
+        </div>
+    </div>
+
+{% endblock %}

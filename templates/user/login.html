@@ -1,0 +1,32 @@
+{% extends 'frame/index.html' %}
+
+{% block title %}登录{% endblock %}
+
+{#{% block header %}#}
+{#    <style type="text/css">#}
+{##}
+{#    </style>#}
+{#{% endblock %}#}
+
+{% block main %}
+
+    <div class="email-content">
+        <div class="email-content-header">
+            <h1 class="email-content-title">登录</h1>
+        </div>
+
+        <div class="email-content-body">
+            <form method="post" action="{{ url_for('app_users.login_post') }}">
+                <input type="text" name="username">
+                <input type="text" name="password">
+                <button type="submit">提交</button>
+            </form>
+            {{ message }}
+            <br/>
+            <h2>
+                评论功能开发中
+            </h2>
+        </div>
+    </div>
+
+{% endblock %}

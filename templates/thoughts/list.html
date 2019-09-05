@@ -21,7 +21,7 @@
             </div>
 
             <div class="pure-u-3-4">
-                <h5 class="email-name">{{ posts.create_time }} · <a href="{{ url_for('app_users.username', username=posts.create_user) }}">{{ posts.create_user }}</a></h5>
+                <h5 class="email-name">{{ posts.create_time }} · <a href="{{ url_for('app_users.info', username=posts.create_user) }}">{{ posts.create_user }}</a></h5>
                 <a href="{{ url_for('app_thought.thought', id=posts.id) }}"><h4 class="email-subject">{{ posts.post_title }}</h4></a>
                 <p class="email-desc">
                     {{ posts.post_summary }}-{{ posts.post_type }}
