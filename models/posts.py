@@ -12,13 +12,13 @@ See the Mulan PSL v1 for more details.
 from flask import render_template
 
 from config.config import page_size
-from config.db import run_select, run_select_one
+from config.db import select_list, select_one
 
 
 def posts_by_tag(post_type, page_num):
     limit_begin = (page_num - 1) * page_size
 
-    return run_select('''
+    return select_list('''
 select *
 from app_posts
 where post_status = '1'
@@ -32,7 +32,7 @@ limit %d,%d
 def posts_by_num(page_num):
     limit_begin = (page_num - 1) * page_size
 
-    return run_select('''
+    return select_list('''
 select *
 from app_posts
 where post_status = '1'
@@ -42,7 +42,7 @@ limit %d,%d
 
 
 def count_num():
-    return run_select_one('''
+    return select_one('''
 select count(1) as count 
 from app_posts
 where post_status = '1'
@@ -50,7 +50,7 @@ where post_status = '1'
 
 
 def count_num_by_type(post_type):
-    return run_select_one('''
+    return select_one('''
 select count(1) as count 
 from app_posts
 where post_status = '1'

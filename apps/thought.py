@@ -12,7 +12,7 @@ See the Mulan PSL v1 for more details.
 
 from flask import Blueprint, render_template, redirect, url_for
 
-from config.db import run_select_one
+from config.db import select_one, select_list
 
 app_thought = Blueprint('app_thought', __name__)
 
@@ -24,7 +24,19 @@ def thought_index():
 
 @app_thought.route("/<int:id>")
 def thought(id):
-    app_posts = run_select_one('''
+    app_posts = select_one('''
     select * from app_posts where id = %d
     ''' % id)
-    return render_template('thoughts/thought.html', app_posts=app_posts)
+
+    app_tags = select_list('''
+select *
+from app_tags at
+where exists(
+              select 1
+              from app_posts_tags apt
+              where apt.tag_code = at.tag_code
+                and apt.post_id = %d
+          )
+    ''' % app_posts['id'])
+
+    return render_template('thoughts/thought.html', app_posts=app_posts, app_tags=app_tags)

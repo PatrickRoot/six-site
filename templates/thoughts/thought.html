@@ -15,22 +15,21 @@
 {% block main %}
 
     <div class="email-content">
-        <div class="email-content-header pure-g">
-{#            <div class="pure-u-1-2">#}
-                <h1 class="email-content-title">{{ app_posts.post_title }}</h1>
-                <p class="email-content-subtitle">
-                    <span>{{ app_posts.create_time }}</span>
+        <div class="email-content-header">
+            <h1 class="email-content-title">{{ app_posts.post_title }}</h1>
+            <p class="email-content-subtitle">
+                <span>{{ app_posts.create_time }}</span>
+                ·
+                <a href="{{ url_for('app_users.username', username=app_posts.create_user) }}">{{ app_posts.create_user }}</a>
+                {% if app_tags|length %}
                     ·
-                    <a href="{{ url_for('app_users.username', username=app_posts.create_user) }}">{{ app_posts.create_user }}</a>
-                </p>
-{#            </div>#}
+                {% endif %}
 
-{#                <div class="email-content-controls pure-u-1-2">#}
-{#                    <button class="secondary-button pure-button">Reply</button>#}
-{#                    <button class="secondary-button pure-button">Forward</button>#}
-{#                    <button class="secondary-button pure-button">Move to</button>#}
-{#                </div>#}
-
+                {% for app_tag in app_tags %}
+                    <a href="{{ url_for('app_tags.tags', tag_code=app_tag.tag_code) }}"
+                       class="secondary-button pure-button">{{ app_tag.tag_name }}</a>
+                {% endfor %}
+            </p>
         </div>
 
         <div class="email-content-body">

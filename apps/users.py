@@ -13,7 +13,7 @@ See the Mulan PSL v1 for more details.
 from flask import Blueprint, render_template
 
 from config.config import page_size
-from config.db import run_select
+from config.db import select_list
 
 app_users = Blueprint('app_users', __name__)
 

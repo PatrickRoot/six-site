@@ -33,11 +33,7 @@
                     <li class="pure-menu-item"><a href="{{ url_for('app_thoughts.thoughts_list', post_type='forum') }}" class="pure-menu-link">讨论</a></li>
                     <li class="pure-menu-item"><a href="{{ url_for('app_thoughts.thoughts_list', post_type='mine') }}" class="pure-menu-link">我的</a></li>
 
-                    <li class="pure-menu-heading">Labels</li>
-
-                    <li class="pure-menu-item"><a href="{{ url_for('app_tags.tags', tag_name='python') }}" class="pure-menu-link"><span class="email-label-personal"></span>python</a></li>
-                    <li class="pure-menu-item"><a href="{{ url_for('app_tags.tags', tag_name='flask') }}" class="pure-menu-link"><span class="email-label-work"></span>flask</a></li>
-                    <li class="pure-menu-item"><a href="{{ url_for('app_tags.tags', tag_name='jinjia2') }}" class="pure-menu-link"><span class="email-label-travel"></span>jinjia2</a></li>
+                    {{ menu_tags() }}
                 </ul>
             </div>
         </div>

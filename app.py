@@ -17,12 +17,16 @@ from apps.tags import app_tags
 from apps.thought import app_thought
 from apps.thoughts import app_thoughts
 from apps.users import app_users
-from config.db import run_sql
+from config.filter import menu_tags
 from config.init import init_table
 from models.posts import posts_by_num, count_num, render_list
 
 init_table()
 app = Flask(__name__)
+
+env = app.jinja_env
+# env.filters['menu_tags'] = menu_tags
+env.globals["menu_tags"] = menu_tags
 
 app.register_blueprint(app_posts, url_prefix='/posts')
 app.register_blueprint(app_tags, url_prefix='/tags')
@@ -36,28 +40,6 @@ def index():
     posts_list = posts_by_num(1)
     total_number = count_num()
     return render_list(posts_list=posts_list, url_prefix=url_for("app_thoughts.index")+"p/", page_num=1, total_number=total_number)
-
-
-@app.route("/init")
-def init():
-
-    run_sql('''
-update app_posts set post_type = 'blog' where post_type = '0'
-    ''')
-
-    run_sql('''
-update app_posts set post_type = 'forum' where post_type = '1'
-    ''')
-    run_sql('''
-update app_posts set post_type = 'mine' where post_type = '2'
-    ''')
-
-    return """
-    INSERT INTO app_posts 
-    (post_type, post_title, post_content, post_status, view_count, thumb_count, comment_count, create_user, create_time, post_content_origin)
-     VALUES 
-    ('blog', 'b1', 'c1', '1', 0, 0, 0, 'user', '', null)
-    """
 
 
 if __name__ == '__main__':

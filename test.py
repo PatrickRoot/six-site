@@ -9,11 +9,11 @@ IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY OR FIT F
 PURPOSE.
 See the Mulan PSL v1 for more details.
 """
-from config.db import run_select
+from config.db import select_list
 
 if __name__ == '__main__':
     if __name__ == '__main__':
-        print(run_select('''
+        print(select_list('''
         select id as id, post_type as pt
     from app_posts
     where post_status = '1'

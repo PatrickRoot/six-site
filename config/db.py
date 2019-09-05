@@ -32,7 +32,7 @@ def run_sql(sql):
     conn.close()
 
 
-def run_select(sql):
+def select_list(sql):
     result = []
     conn = sqlite3.connect(db_path)
     conn.row_factory = dict_factory
@@ -46,7 +46,7 @@ def run_select(sql):
     return result
 
 
-def run_select_one(sql):
+def select_one(sql):
     result = []
     conn = sqlite3.connect(db_path)
     conn.row_factory = dict_factory
