@@ -1,7 +1,7 @@
-from flask import url_for
+from flask import url_for, request
 from jinja2 import Markup, escape
 
-from config.db import select_list
+from config.db import select_list, select_one
 
 
 def menu_tags():
@@ -49,3 +49,25 @@ having count(1) > 0
 #         escape("is"),
 #         "</li>",
 #         escape(" rich"))
+
+
+def current_url():
+    domain = select_one('''
+    select config_val from site_config
+    where config_key = 'domain'
+    ''')
+
+    request_url = ''
+    if domain:
+        request_url = domain['config_val']
+
+    request_url = request_url + request.path
+
+    return Markup(request_url)
+
+
+def register_filter(app):
+    env = app.jinja_env
+    # env.filters['menu_tags'] = menu_tags
+    env.globals["menu_tags"] = menu_tags
+    env.globals["current_url"] = current_url

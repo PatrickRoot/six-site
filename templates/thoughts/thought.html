@@ -35,6 +35,9 @@
         <div class="email-content-body">
             {{ app_posts.post_content|safe }}
             <br/>
+            <div>
+                <a href="{{ current_url() }}">{{ current_url() }}</a>
+            </div>
             <h2>
                 评论功能开发中
             </h2>

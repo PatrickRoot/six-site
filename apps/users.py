@@ -17,6 +17,7 @@ from flask import Blueprint, render_template, jsonify, make_response, request, r
 
 from config import utils
 from config.db import select_one
+from config.utils import is_login
 
 app_users = Blueprint('app_users', __name__)
 
@@ -36,6 +37,8 @@ def login_get():
     message = request.args.get('message')
     if not message:
         message = ''
+    if is_login():
+        message = message + '[已登录]'
     return render_template('user/login.html', message=message)
 
 

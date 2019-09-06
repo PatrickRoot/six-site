@@ -10,29 +10,46 @@ PURPOSE.
 See the Mulan PSL v1 for more details.
 """
 
-from flask import Flask, url_for
+from flask import Flask, url_for, request, jsonify, redirect
 
 from apps.posts import app_posts
 from apps.tags import app_tags
 from apps.thought import app_thought
 from apps.thoughts import app_thoughts
 from apps.users import app_users
-from config.filter import menu_tags
+from config.filter import menu_tags, current_url, register_filter
 from config.init import init_table
+from config.utils import is_login, login_user
 from models.posts import posts_by_num, count_num, render_list
 
 init_table()
 app = Flask(__name__)
 
-env = app.jinja_env
-# env.filters['menu_tags'] = menu_tags
-env.globals["menu_tags"] = menu_tags
+register_filter(app)
 
 app.register_blueprint(app_posts, url_prefix='/posts')
 app.register_blueprint(app_tags, url_prefix='/tags')
 app.register_blueprint(app_thought, url_prefix='/thought')
 app.register_blueprint(app_thoughts, url_prefix='/thoughts')
 app.register_blueprint(app_users, url_prefix='/user')
+
+
+@app.before_request
+def before_request():
+    username = login_user()
+    path = request.path
+    if username is None:
+        print(path + " - None")
+        if "/auth/" in path:
+            if request.method == "GET":
+                return redirect(url_for('app_users.login_get', message="未登录"))
+            else:
+                return jsonify({
+                    "success": False,
+                    "message": "未登录"
+                })
+    else:
+        print(path + " - " + username)
 
 
 @app.route('/')
