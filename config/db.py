@@ -22,10 +22,22 @@ def dict_factory(cursor, row):
     return d
 
 
+def run_sql2(sql, param):
+    conn = sqlite3.connect(db_path)
+    cur = conn.cursor()
+
+    print(sql)
+    cur.execute(sql, param)
+
+    conn.commit()
+    conn.close()
+
+
 def run_sql(sql):
     conn = sqlite3.connect(db_path)
     cur = conn.cursor()
 
+    print(sql)
     cur.execute(sql)
 
     conn.commit()

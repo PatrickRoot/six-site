@@ -65,7 +65,6 @@ CREATE index IF NOT EXISTS app_posts_index_post_status on app_posts (post_status
 (
     id INTEGER primary key autoincrement,
     tag_name TEXT,
-    tag_code TEXT,
     create_user TEXT,
     create_time TEXT
 );
@@ -75,9 +74,6 @@ CREATE index IF NOT EXISTS app_posts_index_post_status on app_posts (post_status
     run_sql('''
 CREATE index IF NOT EXISTS app_tags_index_tag_name on app_tags (tag_name);
     ''')
-    run_sql('''
-CREATE index IF NOT EXISTS app_tags_index_tag_code on app_tags (tag_code);
-    ''')
 
     # 创建 app_posts_tags
     run_sql('''
@@ -85,7 +81,7 @@ CREATE index IF NOT EXISTS app_tags_index_tag_code on app_tags (tag_code);
 (
     id INTEGER primary key autoincrement,
     post_id INTEGER,
-    tag_code TEXT,
+    tag_id INTEGER,
     create_user TEXT,
     create_time TEXT
 );
@@ -96,7 +92,7 @@ CREATE index IF NOT EXISTS app_tags_index_tag_code on app_tags (tag_code);
 CREATE index IF NOT EXISTS app_posts_tags_index_post_id on app_posts_tags (post_id);
     ''')
     run_sql('''
-CREATE index IF NOT EXISTS app_posts_tags_index_tag_code on app_posts_tags (tag_code);
+CREATE index IF NOT EXISTS app_posts_tags_index_tag_id on app_posts_tags (tag_id);
     ''')
 
     # 创建 app_user

@@ -20,24 +20,24 @@ app_tags = Blueprint('app_tags', __name__)
 
 
 # 标签
-@app_tags.route("/<tag_code>/")
-def tags(tag_code):
-    posts_list = posts_by_tag(tag_code, 1)
-    total_number = count_num_by_tag(tag_code)
-    return render_list(posts_list=posts_list, url_prefix=url_for("app_tags.tags", tag_code=tag_code), page_num=1,
+@app_tags.route("/<int:tag_id>/")
+def tags(tag_id):
+    posts_list = posts_by_tag(tag_id, 1)
+    total_number = count_num_by_tag(tag_id)
+    return render_list(posts_list=posts_list, url_prefix=url_for("app_tags.tags", tag_id=tag_id), page_num=1,
                        total_number=total_number)
 
 
 # 标签
-@app_tags.route("/<tag_code>/<int:page_num>")
-def tags_page(tag_code, page_num):
-    posts_list = posts_by_tag(tag_code, page_num)
-    total_number = count_num_by_tag(tag_code)
-    return render_list(posts_list=posts_list, url_prefix=url_for("app_tags.tags", tag_code=tag_code), page_num=page_num,
+@app_tags.route("/<tag_id>/<int:page_num>")
+def tags_page(tag_id, page_num):
+    posts_list = posts_by_tag(tag_id, page_num)
+    total_number = count_num_by_tag(tag_id)
+    return render_list(posts_list=posts_list, url_prefix=url_for("app_tags.tags", tag_id=tag_id), page_num=page_num,
                        total_number=total_number)
 
 
-def count_num_by_tag(tag_code):
+def count_num_by_tag(tag_id):
     return select_one('''
             select count(1) as count
             from app_posts ap
@@ -46,12 +46,12 @@ def count_num_by_tag(tag_code):
                     select 1
                     from app_posts_tags apt
                     where apt.post_id = ap.id
-                      and apt.tag_code = '%s'
+                      and apt.tag_id = '%d'
                 )
-        ''' % tag_code)['count']
+        ''' % tag_id)['count']
 
 
-def posts_by_tag(tag_name, page_num):
+def posts_by_tag(tag_id, page_num):
     limit_begin = (page_num - 1) * page_size
 
     return select_list('''
@@ -62,8 +62,8 @@ def posts_by_tag(tag_name, page_num):
                     select 1
                     from app_posts_tags apt
                     where apt.post_id = ap.id
-                      and apt.tag_code = '%s'
+                      and apt.tag_id = '%d'
                 )
             order by ap.create_time desc 
             limit %d,%d
-        ''' % (tag_name, limit_begin, page_size))
+        ''' % (tag_id, limit_begin, page_size))

@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新增 - 六楼实验室</title>
+    <meta name="keywords" content="sixlab,sixlab.cn,六楼,六楼的雨,六楼实验室,minesoft,minesoft.tech,矿软,矿软科技"/>
+    <meta name="description" content="sixlab,sixlab.cn,六楼,六楼的雨,六楼实验室,minesoft,minesoft.tech,矿软,矿软科技w"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='pure/pure-min.css') }}" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='email.css') }}">
+
+	<script type="text/javascript" src="{{ url_for('static', filename='jquery/jquery-3.4.1.min.js') }}"></script>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='easymde/easymde.min.css') }}">
+    <script type="text/javascript" src="{{ url_for('static', filename='easymde/easymde.min.js') }}"></script>
+
+{#    <link rel="stylesheet" href="{{ url_for('static', filename='simditor/simditor.css') }}">#}
+{#	<script type="text/javascript" src="{{ url_for('static', filename='simditor/module.js') }}"></script>#}
+{#    <script type="text/javascript" src="{{ url_for('static', filename='simditor/hotkeys.js') }}"></script>#}
+{#    <script type="text/javascript" src="{{ url_for('static', filename='simditor/uploader.js') }}"></script>#}
+{#    <script type="text/javascript" src="{{ url_for('static', filename='simditor/simditor.js') }}"></script>#}
+{##}
+{#    <script type="text/javascript" src="{{ url_for('static', filename='marked/marked.min.js') }}"></script>#}
+{#	<script type="text/javascript" src="{{ url_for('static', filename='marked/turndown.js') }}"></script>#}
+{#	<script type="text/javascript" src="{{ url_for('static', filename='marked/simditor-markdown.js') }}"></script>#}
+
+    {% block header %}
+        <style>
+            #layout{
+                margin: 50px;
+            }
+        </style>
+    {% endblock %}
+</head>
+<body>
+<div id="layout" class="content">
+
+    <form id="wrapper" class="pure-form pure-form-stacked">
+        <div class="hidden">
+            <button type="button">测试</button>
+            <div id="summary"></div>
+        </div>
+
+        <input type="hidden" id="id" value="{{ id }}">
+
+        <fieldset class="pure-group">
+            <input id="title" class="pure-input-1" type="text" placeholder="标题"><br>
+            <textarea id="editor"></textarea>
+        </fieldset>
+
+        <fieldset>
+            <div class="pure-g">
+
+                <div class="pure-u-1-3">
+                    <label for="date">时间</label>
+                    <input id="date" class="pure-u-23-24" type="text">
+                </div>
+
+                <div class="pure-u-1-3">
+                    <label for="type">分类</label>
+                    <select id="type" class="pure-u-23-24">
+                        <option>blog</option>
+                        <option>forum</option>
+                        <option>mine</option>
+                    </select>
+                </div>
+
+                <div class="pure-u-1-3">
+                    <label for="tags">标签</label>
+                    <input id="tags" class="pure-u-23-24" type="text">
+                </div>
+            </div>
+        </fieldset>
+
+        <div style="text-align: center;">
+            <button id="submit" type="button" class="pure-button pure-input-1 pure-button-primary">提 交</button>
+        </div>
+
+        <div id="result">
+
+        </div>
+    </form>
+
+    <script>
+        {#marked.setOptions({#}
+        {#    renderer: new marked.Renderer(),#}
+        {#    highlight: function (code) {#}
+        {#        return require('highlight.js').highlightAuto(code).value;#}
+        {#    },#}
+        {#    pedantic: false,#}
+        {#    gfm: true,#}
+        {#    breaks: false,#}
+        {#    sanitize: false,#}
+        {#    smartLists: true,#}
+        {#    smartypants: false,#}
+        {#    xhtml: false#}
+        {# });#}
+
+        var editor = new EasyMDE({
+            element: document.getElementById("editor"),
+            autofocus: true,
+            autoDownloadFontAwesome: true,
+            autosave: {
+                enabled: true,
+                uniqueId: "six-site",
+                delay: 1000,
+            },
+            indentWithTabs:false,
+            promptURLs:true,
+            promptTexts:{
+                "image":"",
+                "link":"",
+            },
+            minHeight:"500px",
+            placeholder: "Markdown 格式正文 ...",
+            showIcons: ['strikethrough', 'code', 'table', 'redo', 'heading', 'undo', 'heading-bigger', 'heading-smaller', 'heading-1', 'heading-2', 'heading-3', 'clean-block', 'horizontal-rule', 'upload-image'],
+            spellChecker: false,
+            tabSize: 4,
+            uploadImage: true,
+            imageAccept: "image/png,image/jpeg,image/jpg,image/gif",
+            imageUploadFunction: function (file, onSuccess, onError) {
+                try {
+                    var imageUrl = ""; // uploadImage(file)
+                    onSuccess(imageUrl)
+                } catch (error) {
+                    onError(error)
+                }
+            },
+            imageUploadEndpoint:"",//{"data": {"filePath": "<filePath>"}}  {"error": "<errorCode>"}
+        });
+
+        var markdown = editor.value();
+        var html = editor.markdown(markdown);
+        var summary = $("#summary").html(html).text();
+
+        $("#submit").on("click", function () {
+            $.ajax({
+                url: "{{  url_for('app_posts.submit') }}?_t=" + Math.random(),
+                data: {
+                    id:$("#id").val(),
+                    title:$("#title").val(),
+                    markdwon: markdown,
+                    content: html,
+                    summary: summary,
+                    tags:$("#tags").val(),
+                    type:$("#type").val(),
+                    date:$("#date").val(),
+                },
+                type: "post",
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    $("#result").text(JSON.stringify(data))
+                },
+                error: function (data) {
+                    console.log(data);
+                    $("#result").text(JSON.stringify(data))
+                },
+            });
+        })
+    </script>
+</div>
+</body>
+</html>

@@ -16,7 +16,12 @@
 
     <div class="email-content">
         <div class="email-content-header">
-            <h1 class="email-content-title">{{ app_posts.post_title }}</h1>
+            <h1 class="email-content-title">
+                {{ app_posts.post_title }}
+                {% if is_login %}
+                    <a href="{{ url_for('app_posts.edit', post_id=app_posts.id) }}" target="_blank">编辑</a>
+                {% endif %}
+            </h1>
             <p class="email-content-subtitle">
                 <span>{{ app_posts.create_time }}</span>
                 ·
@@ -26,7 +31,7 @@
                 {% endif %}
 
                 {% for app_tag in app_tags %}
-                    <a href="{{ url_for('app_tags.tags', tag_code=app_tag.tag_code) }}"
+                    <a href="{{ url_for('app_tags.tags', tag_id=app_tag.id) }}"
                        class="secondary-button pure-button">{{ app_tag.tag_name }}</a>
                 {% endfor %}
             </p>

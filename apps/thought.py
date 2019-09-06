@@ -13,6 +13,7 @@ See the Mulan PSL v1 for more details.
 from flask import Blueprint, render_template, redirect, url_for
 
 from config.db import select_one, select_list
+from config.utils import is_login
 
 app_thought = Blueprint('app_thought', __name__)
 
@@ -36,9 +37,11 @@ def thought(id):
             where exists(
                       select 1
                       from app_posts_tags apt
-                      where apt.tag_code = at.tag_code
+                      where apt.tag_id = at.id
                         and apt.post_id = %d
                   )
         ''' % app_posts['id'])
 
-    return render_template('thoughts/thought.html', app_posts=app_posts, app_tags=app_tags)
+
+
+    return render_template('thoughts/thought.html', app_posts=app_posts, app_tags=app_tags, is_login=is_login())
