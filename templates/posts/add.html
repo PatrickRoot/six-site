@@ -102,7 +102,11 @@
             autoDownloadFontAwesome: true,
             autosave: {
                 enabled: true,
-                uniqueId: "six-site",
+                {% if id %}
+                    uniqueId: "six-site-edit_{{ id }}",
+                {% else %}
+                    uniqueId: "six-site-add",
+                {% endif %}
                 delay: 1000,
             },
             indentWithTabs:false,
@@ -129,11 +133,33 @@
             imageUploadEndpoint:"",//{"data": {"filePath": "<filePath>"}}  {"error": "<errorCode>"}
         });
 
-        var markdown = editor.value();
-        var html = editor.markdown(markdown);
-        var summary = $("#summary").html(html).text();
+        {% if id %}
+            $.ajax({
+                url: "{{  url_for('app_posts.post', post_id=id) }}?_t=" + Math.random(),
+                type: "post",
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    post = data.data.post;
+                    tags = data.data.tags;
+                    $("#title").val(post.post_title);
+                    editor.value(post.post_content_origin);
+                    $("#date").val(post.create_time);
+                    $("#type").val(post.post_type);
+                    $("#tags").val(tags);
+                },
+                error: function (data) {
+                    console.log(data);
+                    $("#result").text(JSON.stringify(data))
+                },
+            });
+        {% endif %}
 
         $("#submit").on("click", function () {
+            let markdown = editor.value();
+            let html = editor.markdown(markdown);
+            let summary = $("#summary").html(html).text();
+
             $.ajax({
                 url: "{{  url_for('app_posts.submit') }}?_t=" + Math.random(),
                 data: {

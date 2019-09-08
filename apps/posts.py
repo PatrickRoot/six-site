@@ -28,6 +28,33 @@ def edit(post_id):
     return render_template('posts/add.html', id=post_id)
 
 
+@app_posts.route("/auth/post/<int:post_id>", methods=['POST'])
+def post(post_id):
+    app_posts = select_one('''
+    select *
+    from app_posts
+    where id = %d
+    ''' % (post_id,))
+
+    app_tags = select_one('''
+    select group_concat(at.tag_name) as tags
+    from app_tags at,app_posts_tags apt 
+    where at.id = apt.tag_id
+    and apt.post_id = %d
+    '''%(post_id,))
+
+    if app_tags:
+        app_tags = app_tags['tags']
+
+    return jsonify({
+        "success": True,
+        "data":{
+            "post": app_posts,
+            "tags": app_tags,
+        }
+    })
+
+
 @app_posts.route("/auth/submit", methods=['POST'])
 def submit():
     id = request.form.get("id")
