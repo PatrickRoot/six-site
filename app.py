@@ -12,6 +12,7 @@ See the Mulan PSL v1 for more details.
 
 from flask import Flask, url_for, request, jsonify, redirect
 
+from apps.api import app_api
 from apps.posts import app_posts
 from apps.tags import app_tags
 from apps.thought import app_thought
@@ -32,6 +33,7 @@ app.register_blueprint(app_tags, url_prefix='/tags')
 app.register_blueprint(app_thought, url_prefix='/thought')
 app.register_blueprint(app_thoughts, url_prefix='/thoughts')
 app.register_blueprint(app_users, url_prefix='/user')
+app.register_blueprint(app_api, url_prefix='/api')
 
 
 @app.before_request
