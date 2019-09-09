@@ -11,10 +11,10 @@ See the Mulan PSL v1 for more details.
 """
 import os
 
-from flask import Blueprint, render_template, jsonify, request
+import markdown
+from flask import Blueprint, jsonify, request
 
-from config.db import select_one, select_list, run_sql2
-from config.utils import is_login
+from config.db import select_one, run_sql2
 
 app_api = Blueprint('app_api', __name__)
 
@@ -27,7 +27,6 @@ def thought_index():
 def import_md(filename):
     file_object = open(filename, 'rU')
     count = 0
-    is_list = False
 
     try:
         origin_id = ""
@@ -59,18 +58,20 @@ def import_md(filename):
                 tags.append(tag)
                 continue
 
+        html = markdown.markdown(content_origin)
+
         run_sql2('''
         INSERT INTO app_posts 
         (post_type, post_title, post_summary, post_content, post_content_origin, post_status, view_count, thumb_count, comment_count, create_user, create_time) 
         VALUES 
         ('blog', ?, ?, ?, ?, '1', 0, 0, 0, ?, ?)
-        ''', (title, id, 'todo', content_origin, 'import', date))
+        ''', (title, origin_id, html, content_origin, 'import', date))
 
         app_posts = select_one('''
         select *
         from app_posts
         where post_summary = '%s'
-        ''' % (id,))
+        ''' % (origin_id,))
 
         if app_posts:
             post_id = app_posts["id"]
@@ -102,7 +103,7 @@ def import_md(filename):
                 VALUES 
                 (?, ?)
                 ''', (post_id, app_tags["id"]))
-
+        return title
     finally:
         file_object.close()
 
@@ -116,30 +117,15 @@ def import_wordpress():
     if request.form.__contains__("path"):
         hexo_path = request.form['path']
 
+    count = 0
+    files = []
     if hexo_path:
         for filename in os.listdir(hexo_path):
             filename = os.path.join(hexo_path, filename)
             if filename.endswith(".md") and os.path.isfile(filename):
-                import_md(filename)
+                files.append(import_md(filename))
+                count = count + 1
 
     return jsonify({
 
     })
-
-
-'''
----
-title: Centos 7 开发环境之 Gogs 的安装及配置（二进制）
-id: 2018/06/07/gogs
-date: 2018-06-07 12:44:32
-categories:
-  - 技术研究
-tags:
-  - centos
-  - Gogs
-  - Git
-toc: true
-comments: true
----
-
-'''
