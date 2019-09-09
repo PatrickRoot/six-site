@@ -28,6 +28,8 @@ def import_md(filename):
     file_object = open(filename, 'rU')
     count = 0
 
+    print("开始>>>："+filename)
+
     try:
         origin_id = ""
         title = ""
@@ -45,7 +47,7 @@ def import_md(filename):
                 continue
 
             if line_strip.startswith("id:"):
-                id = line_strip.replace("id:", "", 1).strip()
+                origin_id = line_strip.replace("id:", "", 1).strip()
                 continue
             if line_strip.startswith("title:"):
                 title = line_strip.replace("title:", "", 1).strip()
@@ -57,6 +59,11 @@ def import_md(filename):
                 tag = line_strip.replace("- ", "", 1).strip()
                 tags.append(tag)
                 continue
+            if line_strip.startswith("categories:") or line_strip.startswith("tags:"):
+                continue
+            if line_strip.startswith("toc:") or line_strip.startswith("comments:"):
+                continue
+            print("未知：" + line_strip)
 
         html = markdown.markdown(content_origin)
 
