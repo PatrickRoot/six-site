@@ -26,6 +26,10 @@
                 <span>{{ app_posts.create_time }}</span>
                 ·
                 <a href="{{ url_for('app_users.info', username=app_posts.create_user) }}">{{ app_posts.create_user }}</a>
+                ·
+                <span>👓({{ app_posts.view_count }})</span>
+                ·
+                <a href="#" id="j-thumb">👍({{ app_posts.thumb_count }})</a>
                 {% if app_tags|length %}
                     ·
                 {% endif %}
@@ -49,4 +53,21 @@
         </div>
     </div>
 
+    <script>
+        $("#j-thumb").click(function () {
+            $.ajax({
+                url: "{{  url_for('app_thought.thumb', post_id=app_posts.id) }}?_t=" + Math.random(),
+                type: "post",
+                dataType: "json",
+                success: function (data) {
+                    $("#j-thumb").text("👍(" + data.data + ")");
+                },
+                error: function (data) {
+                    console.log(data);
+                },
+            });
+
+            return false;
+        });
+    </script>
 {% endblock %}
