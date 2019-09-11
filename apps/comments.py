@@ -10,9 +10,9 @@ PURPOSE.
 See the Mulan PSL v1 for more details.
 """
 
-from flask import Blueprint, render_template, request, jsonify
+from flask import Blueprint, render_template, jsonify, request
 
-from config.db import select_list
+from config.db import select_list, run_sql, select_one
 
 app_comments = Blueprint('app_comments', __name__)
 
@@ -27,7 +27,28 @@ def list(post_id):
     order by id desc 
     ''', (post_id,))
 
-    return render_template('comments/list.html', app_comments=app_comments)
+    return render_template('comments/list.html', post_id=post_id, app_comments=app_comments)
+
+
+@app_comments.route("/thumb", methods=['POST'])
+def thumb():
+    comment_id = request.form["commentId"]
+    run_sql('''
+    update app_comment
+    set thumb_count = thumb_count + 1
+    where id = ?
+    ''', (comment_id,))
+
+    app_posts = select_one('''
+                select * 
+                from app_comment 
+                where id = ?
+            ''', (comment_id,))
+
+    return jsonify({
+        "success": True,
+        "data": app_posts['thumb_count']
+    })
 
 
 @app_comments.route("/auth/edit/<int:post_id>")
