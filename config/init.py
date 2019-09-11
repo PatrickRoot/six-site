@@ -24,12 +24,12 @@ def init_table():
     create_user TEXT,
     create_time TEXT
 )
-    ''')
+    ''',())
 
     # site_config 索引
     run_sql('''
 CREATE index IF NOT EXISTS site_config_index_config_key on site_config (config_key)
-    ''')
+    ''',())
 
     # 创建 app_posts
     run_sql('''
@@ -48,16 +48,16 @@ CREATE index IF NOT EXISTS site_config_index_config_key on site_config (config_k
     create_user TEXT,
     create_time TEXT
 )
-    ''')
+    ''',())
 
     # app_posts 索引
     run_sql('''
 CREATE index IF NOT EXISTS app_posts_index_post_type on app_posts (post_type)
-    ''')
+    ''',())
 
     run_sql('''
 CREATE index IF NOT EXISTS app_posts_index_post_status on app_posts (post_status)
-    ''')
+    ''',())
 
     # 创建 app_tags
     run_sql('''
@@ -68,12 +68,12 @@ CREATE index IF NOT EXISTS app_posts_index_post_status on app_posts (post_status
     create_user TEXT,
     create_time TEXT
 )
-    ''')
+    ''',())
 
     # app_tags 索引
     run_sql('''
 CREATE index IF NOT EXISTS app_tags_index_tag_name on app_tags (tag_name)
-    ''')
+    ''',())
 
     # 创建 app_posts_tags
     run_sql('''
@@ -85,15 +85,15 @@ CREATE index IF NOT EXISTS app_tags_index_tag_name on app_tags (tag_name)
     create_user TEXT,
     create_time TEXT
 )
-    ''')
+    ''',())
 
     # app_posts_tags 索引
     run_sql('''
 CREATE index IF NOT EXISTS app_posts_tags_index_post_id on app_posts_tags (post_id)
-    ''')
+    ''',())
     run_sql('''
 CREATE index IF NOT EXISTS app_posts_tags_index_tag_id on app_posts_tags (tag_id)
-    ''')
+    ''',())
 
     # 创建 app_user
     run_sql('''
@@ -107,12 +107,12 @@ CREATE index IF NOT EXISTS app_posts_tags_index_tag_id on app_posts_tags (tag_id
     create_user TEXT,
     create_time TEXT
 )
-    ''')
+    ''',())
 
     # app_user 索引
     run_sql('''
 CREATE index IF NOT EXISTS app_user_index_username on app_user (username)
-    ''')
+    ''',())
 
     # 创建 app_comment
     run_sql('''
@@ -121,16 +121,18 @@ CREATE index IF NOT EXISTS app_user_index_username on app_user (username)
     id INTEGER primary key autoincrement,
     post_id INTEGER,
     replay_id INTEGER,
-    comment_conent TEXT,
+    replay_count INTEGER,
+    thumb_count INTEGER,
+    comment_content TEXT,
     create_user TEXT,
     create_time TEXT
 )
-    ''')
+    ''',())
 
     # app_comment 索引
     run_sql('''
 CREATE index IF NOT EXISTS app_comment_index_post_id on app_comment (post_id)
-    ''')
+    ''',())
     run_sql('''
 CREATE index IF NOT EXISTS app_comment_index_replay_id on app_comment (replay_id)
-    ''')
+    ''',())

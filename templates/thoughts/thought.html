@@ -8,7 +8,10 @@
 
 {% block header %}
     <style type="text/css">
-
+        .ss-content-link{
+            width: 80%;
+            margin: 0 auto;
+        }
     </style>
 {% endblock %}
 
@@ -46,15 +49,32 @@
         </div>
 
         <div class="ss-content-link">
-            <a href="{{ current_url() }}">{{ current_url() }}</a>
+            <div>本文链接：<a href="{{ current_url() }}">{{ current_url() }}</a></div>
         </div>
 
-        {% with post_id = app_posts.id %}
-            {% include 'frame/comment.html' %}
-        {% endwith %}
+        <div class="ss-content-comment" id="j-content-comment">
+
+        </div>
+
+{#        {% with post_id = app_posts.id %}#}
+{#            {% include 'frame/comment.html' %}#}
+{#        {% endwith %}#}
     </div>
 
     <script>
+        $.ajax({
+            url: "{{  url_for('app_comments.list', post_id=app_posts.id) }}?_t=" + Math.random(),
+            type: "post",
+            dataType: "html",
+            success: function (data) {
+                $("#j-content-comment").html(data);
+            },
+            error: function (data) {
+                alert("评论加载失败");
+                console.log(data);
+            },
+        });
+
         $("#j-thumb").click(function () {
             $.ajax({
                 url: "{{  url_for('app_thought.thumb', post_id=app_posts.id) }}?_t=" + Math.random(),

@@ -9,7 +9,7 @@ function keyUP(t) {
     }
 }
 
-$('.j-content-comment').on('click', '.plBtn', function () {
+$('.j-comment').on('click', '.plBtn', function () {
     var myDate = new Date();
     //获取当前年
     var year = myDate.getFullYear();
@@ -111,7 +111,7 @@ $('.comment-show').on('click', '.hf-pl', function () {
     }
 });
 
-$('.j-content-comment').on('click', '.removeBlock', function () {
+$('.j-comment').on('click', '.removeBlock', function () {
     var oT = $(this).parents('.date-dz-right').parents('.date-dz').parents('.all-pl-con');
     if (oT.siblings('.all-pl-con').length >= 1) {
         oT.remove();
