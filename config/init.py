@@ -23,12 +23,12 @@ def init_table():
     config_val TEXT,
     create_user TEXT,
     create_time TEXT
-);
+)
     ''')
 
     # site_config 索引
     run_sql('''
-CREATE index IF NOT EXISTS site_config_index_config_key on site_config (config_key);
+CREATE index IF NOT EXISTS site_config_index_config_key on site_config (config_key)
     ''')
 
     # 创建 app_posts
@@ -47,16 +47,16 @@ CREATE index IF NOT EXISTS site_config_index_config_key on site_config (config_k
     comment_count INTEGER,
     create_user TEXT,
     create_time TEXT
-);
+)
     ''')
 
     # app_posts 索引
     run_sql('''
-CREATE index IF NOT EXISTS app_posts_index_post_type on app_posts (post_type);
+CREATE index IF NOT EXISTS app_posts_index_post_type on app_posts (post_type)
     ''')
 
     run_sql('''
-CREATE index IF NOT EXISTS app_posts_index_post_status on app_posts (post_status);
+CREATE index IF NOT EXISTS app_posts_index_post_status on app_posts (post_status)
     ''')
 
     # 创建 app_tags
@@ -67,12 +67,12 @@ CREATE index IF NOT EXISTS app_posts_index_post_status on app_posts (post_status
     tag_name TEXT,
     create_user TEXT,
     create_time TEXT
-);
+)
     ''')
 
     # app_tags 索引
     run_sql('''
-CREATE index IF NOT EXISTS app_tags_index_tag_name on app_tags (tag_name);
+CREATE index IF NOT EXISTS app_tags_index_tag_name on app_tags (tag_name)
     ''')
 
     # 创建 app_posts_tags
@@ -84,15 +84,15 @@ CREATE index IF NOT EXISTS app_tags_index_tag_name on app_tags (tag_name);
     tag_id INTEGER,
     create_user TEXT,
     create_time TEXT
-);
+)
     ''')
 
     # app_posts_tags 索引
     run_sql('''
-CREATE index IF NOT EXISTS app_posts_tags_index_post_id on app_posts_tags (post_id);
+CREATE index IF NOT EXISTS app_posts_tags_index_post_id on app_posts_tags (post_id)
     ''')
     run_sql('''
-CREATE index IF NOT EXISTS app_posts_tags_index_tag_id on app_posts_tags (tag_id);
+CREATE index IF NOT EXISTS app_posts_tags_index_tag_id on app_posts_tags (tag_id)
     ''')
 
     # 创建 app_user
@@ -106,10 +106,31 @@ CREATE index IF NOT EXISTS app_posts_tags_index_tag_id on app_posts_tags (tag_id
     intro TEXT,
     create_user TEXT,
     create_time TEXT
-);
+)
     ''')
 
     # app_user 索引
     run_sql('''
-CREATE index IF NOT EXISTS app_user_index_username on app_user (username);
+CREATE index IF NOT EXISTS app_user_index_username on app_user (username)
+    ''')
+
+    # 创建 app_comment
+    run_sql('''
+    CREATE TABLE IF NOT EXISTS app_comment
+(
+    id INTEGER primary key autoincrement,
+    post_id INTEGER,
+    replay_id INTEGER,
+    comment_conent TEXT,
+    create_user TEXT,
+    create_time TEXT
+)
+    ''')
+
+    # app_comment 索引
+    run_sql('''
+CREATE index IF NOT EXISTS app_comment_index_post_id on app_comment (post_id)
+    ''')
+    run_sql('''
+CREATE index IF NOT EXISTS app_comment_index_replay_id on app_comment (replay_id)
     ''')
