@@ -22,7 +22,7 @@ def dict_factory(cursor, row):
     return d
 
 
-def run_sql2(sql, param):
+def run_sql(sql, param):
     conn = sqlite3.connect(db_path)
     cur = conn.cursor()
 
@@ -33,24 +33,13 @@ def run_sql2(sql, param):
     conn.close()
 
 
-def run_sql(sql):
-    conn = sqlite3.connect(db_path)
-    cur = conn.cursor()
-
-    print(sql)
-    cur.execute(sql)
-
-    conn.commit()
-    conn.close()
-
-
-def select_list(sql):
+def select_list(sql, param):
     result = []
     conn = sqlite3.connect(db_path)
     conn.row_factory = dict_factory
     cur = conn.cursor()
 
-    for row in cur.execute(sql):
+    for row in cur.execute(sql, param):
         result.append(row)
 
     conn.close()
@@ -58,13 +47,13 @@ def select_list(sql):
     return result
 
 
-def select_one(sql):
+def select_one(sql, param):
     result = []
     conn = sqlite3.connect(db_path)
     conn.row_factory = dict_factory
     cur = conn.cursor()
 
-    for row in cur.execute(sql):
+    for row in cur.execute(sql, param):
         result.append(row)
 
     conn.close()

@@ -14,7 +14,7 @@ import os
 import markdown
 from flask import Blueprint, jsonify, request
 
-from config.db import select_one, run_sql2
+from config.db import select_one, run_sql
 
 app_api = Blueprint('app_api', __name__)
 
@@ -67,7 +67,7 @@ def import_md(filename):
 
         html = markdown.markdown(content_origin)
 
-        run_sql2('''
+        run_sql('''
         INSERT INTO app_posts 
         (post_type, post_title, post_summary, post_content, post_content_origin, post_status, view_count, thumb_count, comment_count, create_user, create_time) 
         VALUES 
@@ -77,8 +77,8 @@ def import_md(filename):
         app_posts = select_one('''
         select *
         from app_posts
-        where post_summary = '%s'
-        ''' % (origin_id,))
+        where post_summary = ?
+        ''', (origin_id,))
 
         if app_posts:
             post_id = app_posts["id"]
@@ -87,11 +87,11 @@ def import_md(filename):
                 app_tags = select_one('''
                 select *
                 from app_tags
-                where tag_name = '%s'
-                ''' % tag_name)
+                where tag_name = ?
+                ''', (tag_name,))
 
                 if not app_tags:
-                    run_sql2('''
+                    run_sql('''
                     INSERT INTO app_tags 
                     (tag_name) 
                     VALUES 
@@ -101,10 +101,10 @@ def import_md(filename):
                     app_tags = select_one('''
                                 select *
                                 from app_tags
-                                where tag_name = '%s'
-                                ''' % tag_name)
+                                where tag_name = ?
+                                ''', (tag_name,))
 
-                run_sql2('''
+                run_sql('''
                 INSERT INTO app_posts_tags
                 (post_id, tag_id) 
                 VALUES 

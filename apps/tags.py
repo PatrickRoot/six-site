@@ -46,9 +46,9 @@ def count_num_by_tag(tag_id):
                     select 1
                     from app_posts_tags apt
                     where apt.post_id = ap.id
-                      and apt.tag_id = '%d'
+                      and apt.tag_id = ?
                 )
-        ''' % tag_id)['count']
+        ''', (tag_id,))['count']
 
 
 def posts_by_tag(tag_id, page_num):
@@ -62,8 +62,8 @@ def posts_by_tag(tag_id, page_num):
                     select 1
                     from app_posts_tags apt
                     where apt.post_id = ap.id
-                      and apt.tag_id = '%d'
+                      and apt.tag_id = ?
                 )
             order by ap.create_time desc 
-            limit %d,%d
-        ''' % (tag_id, limit_begin, page_size))
+            limit ?,?
+        ''', (tag_id, limit_begin, page_size))

@@ -22,10 +22,10 @@ def posts_by_tag(post_type, page_num):
 select *
 from app_posts
 where post_status = '1'
-and post_type = '%s'
+and post_type = ?
 order by create_time desc 
-limit %d,%d
-    ''' % (post_type, limit_begin, page_size))
+limit ?,?
+    ''', (post_type, limit_begin, page_size))
 
 
 # 查询
@@ -37,8 +37,8 @@ select *
 from app_posts
 where post_status = '1'
 order by create_time desc 
-limit %d,%d
-    ''' % (limit_begin, page_size))
+limit ?,?
+    ''', (limit_begin, page_size))
 
 
 def count_num():
@@ -46,7 +46,7 @@ def count_num():
 select count(1) as count 
 from app_posts
 where post_status = '1'
-    ''')['count']
+    ''', ())['count']
 
 
 def count_num_by_type(post_type):
@@ -54,8 +54,8 @@ def count_num_by_type(post_type):
 select count(1) as count 
 from app_posts
 where post_status = '1'
-and post_type = '%s'
-    ''' % post_type)['count']
+and post_type = ?
+    ''', (post_type,))['count']
 
 
 def render_list(posts_list, url_prefix, page_num, total_number):

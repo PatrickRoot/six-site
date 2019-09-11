@@ -14,7 +14,12 @@ from config.db import select_list
 if __name__ == '__main__':
     if __name__ == '__main__':
         print(select_list('''
-        select id as id, post_type as pt
-    from app_posts
-    where post_status = '1'
-    '''))
+            select *
+            from app_tags at
+            where exists(
+                      select 1
+                      from app_posts_tags apt
+                      where apt.tag_id = at.id
+                        and apt.post_id = ?
+                  )
+        ''', (1)))

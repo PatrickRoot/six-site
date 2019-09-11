@@ -13,7 +13,7 @@ from app_tags at,
 where apt.tag_id = at.id
 group by at.id
 having count(1) > 0
-    ''')
+    ''', ())
 
     html = ''
 
@@ -52,7 +52,7 @@ def current_url():
     domain = select_one('''
     select config_val from site_config
     where config_key = 'domain'
-    ''')
+    ''', ())
 
     request_url = ''
     if domain:

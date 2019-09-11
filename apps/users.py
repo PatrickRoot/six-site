@@ -27,8 +27,8 @@ def info(username):
     user = select_one('''
             select * 
             from app_user
-            where username = '%s'
-        ''' % username)
+            where username = ?
+        ''', (username,))
     return render_template('user/intro.html', user=user)
 
 
@@ -71,8 +71,8 @@ def login():
     user = select_one('''
             select * 
             from app_user
-            where username = '%s'
-        ''' % username)
+            where username = ?
+        ''', (username,))
 
     if not user:
         message = "用户不存在"

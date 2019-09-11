@@ -13,14 +13,15 @@ See the Mulan PSL v1 for more details.
 from flask import Flask, url_for, request, jsonify, redirect
 
 from apps.api import app_api
+from apps.comments import app_comments
 from apps.posts import app_posts
 from apps.tags import app_tags
 from apps.thought import app_thought
 from apps.thoughts import app_thoughts
 from apps.users import app_users
-from config.filter import menu_tags, current_url, register_filter
+from config.filter import register_filter
 from config.init import init_table
-from config.utils import is_login, login_user
+from config.utils import login_user
 from models.posts import posts_by_num, count_num, render_list
 
 init_table()
@@ -28,10 +29,11 @@ app = Flask(__name__)
 
 register_filter(app)
 
-app.register_blueprint(app_posts, url_prefix='/posts')
 app.register_blueprint(app_tags, url_prefix='/tags')
+app.register_blueprint(app_posts, url_prefix='/posts')
 app.register_blueprint(app_thought, url_prefix='/thought')
 app.register_blueprint(app_thoughts, url_prefix='/thoughts')
+app.register_blueprint(app_comments, url_prefix='/comments')
 app.register_blueprint(app_users, url_prefix='/user')
 app.register_blueprint(app_api, url_prefix='/api')
 
