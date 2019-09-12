@@ -120,8 +120,8 @@ CREATE index IF NOT EXISTS app_user_index_username on app_user (username)
 (
     id INTEGER primary key autoincrement,
     post_id INTEGER,
-    replay_id INTEGER,
-    replay_count INTEGER,
+    reply_id INTEGER,
+    reply_count INTEGER,
     thumb_count INTEGER,
     comment_content TEXT,
     create_user TEXT,
@@ -134,5 +134,5 @@ CREATE index IF NOT EXISTS app_user_index_username on app_user (username)
 CREATE index IF NOT EXISTS app_comment_index_post_id on app_comment (post_id)
     ''',())
     run_sql('''
-CREATE index IF NOT EXISTS app_comment_index_replay_id on app_comment (replay_id)
+CREATE index IF NOT EXISTS app_comment_index_reply_id on app_comment (reply_id)
     ''',())

@@ -63,5 +63,10 @@ def index():
     return render_list(posts_list=posts_list, url_prefix=url_for("app_thoughts.index")+"p/", page_num=1, total_number=total_number)
 
 
+@app.route('/favicon.ico')
+def favicon():
+    return redirect(url_for('static', filename='favicon.ico'))
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8888)

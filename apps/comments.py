@@ -11,7 +11,9 @@ See the Mulan PSL v1 for more details.
 """
 
 from flask import Blueprint, render_template, jsonify, request
+from datetime import datetime
 
+from config import utils
 from config.db import select_list, run_sql, select_one
 
 app_comments = Blueprint('app_comments', __name__)
@@ -27,7 +29,12 @@ def list(post_id):
     order by id desc 
     ''', (post_id,))
 
-    return render_template('comments/list.html', post_id=post_id, app_comments=app_comments)
+    username = utils.login_user()
+
+    if not username:
+        username = ''
+
+    return render_template('comments/list.html', post_id=post_id, app_comments=app_comments, username=username)
 
 
 @app_comments.route("/thumb", methods=['POST'])
@@ -51,21 +58,33 @@ def thumb():
     })
 
 
-@app_comments.route("/auth/edit/<int:post_id>")
-def edit(post_id):
-    return render_template('posts/add.html', id=post_id)
+@app_comments.route("/submit/<int:post_id>", methods=['POST'])
+def submit(post_id):
+    username = request.form['username']
+    comment_content = request.form['commentContent']
+    reply_id = request.form['replyId']
+
+    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    run_sql('''
+    INSERT INTO app_comment (post_id, reply_id, reply_count, thumb_count, comment_content, create_user, create_time) 
+    VALUES (?, ?, 0, 0, ?, ?, ?);
+    ''', (post_id, reply_id, comment_content, username, now))
+
+    run_sql('''
+    update app_posts
+    set comment_count = comment_count + 1
+    where id = ?
+    ''', (post_id,))
+
+    return jsonify({
+        "success": True,
+        "data": now,
+    })
 
 
 @app_comments.route("/auth/post/<int:post_id>", methods=['POST'])
 def post(post_id):
     return jsonify({
         "success": True,
-    })
-
-
-@app_comments.route("/auth/submit", methods=['POST'])
-def submit():
-
-    return jsonify({
-        "success": True
     })

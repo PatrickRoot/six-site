@@ -62,18 +62,22 @@
     </div>
 
     <script>
-        $.ajax({
-            url: "{{  url_for('app_comments.list', post_id=app_posts.id) }}?_t=" + Math.random(),
-            type: "post",
-            dataType: "html",
-            success: function (data) {
-                $("#j-content-comment").html(data);
-            },
-            error: function (data) {
-                alert("评论加载失败");
-                console.log(data);
-            },
-        });
+        window.loadComment = function () {
+            $.ajax({
+                url: "{{  url_for('app_comments.list', post_id=app_posts.id) }}?_t=" + Math.random(),
+                type: "post",
+                dataType: "html",
+                success: function (data) {
+                    $("#j-content-comment").html(data);
+                },
+                error: function (data) {
+                    alert("评论加载失败");
+                    console.log(data);
+                },
+            });
+        };
+
+        loadComment();
 
         $("#j-thumb").click(function () {
             $.ajax({
