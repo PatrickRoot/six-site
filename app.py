@@ -9,8 +9,8 @@ IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY OR FIT F
 PURPOSE.
 See the Mulan PSL v1 for more details.
 """
-
 from flask import Flask, url_for, request, jsonify, redirect
+from flask_apscheduler import APScheduler
 
 from apps.api import app_api
 from apps.comments import app_comments
@@ -21,12 +21,21 @@ from apps.thoughts import app_thoughts
 from apps.users import app_users
 from config.filter import register_filter
 from config.init import init_table
+from config.scheduler import add_jobs, SchedulerConfig
 from config.utils import login_user
 from models.posts import posts_by_num, count_num, render_list
 
 init_table()
+
 app = Flask(__name__)
 
+app.config["JSON_AS_ASCII"] = False
+
+scheduler = APScheduler()
+scheduler.init_app(app)
+scheduler.start()
+
+add_jobs(scheduler)
 register_filter(app)
 
 app.register_blueprint(app_tags, url_prefix='/tags')
@@ -69,4 +78,4 @@ def favicon():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8888)
+    app.run(host='0.0.0.0', port=80)

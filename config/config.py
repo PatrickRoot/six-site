@@ -10,5 +10,5 @@ PURPOSE.
 See the Mulan PSL v1 for more details.
 """
 
-db_path = "./data.db"
+db_path = "./data/data.db"
 page_size = 10

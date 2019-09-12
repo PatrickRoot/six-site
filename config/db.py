@@ -26,7 +26,6 @@ def run_sql(sql, param):
     conn = sqlite3.connect(db_path)
     cur = conn.cursor()
 
-    print(sql)
     cur.execute(sql, param)
 
     conn.commit()
