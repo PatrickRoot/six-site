@@ -21,7 +21,7 @@ from apps.thoughts import app_thoughts
 from apps.users import app_users
 from config.filter import register_filter
 from config.init import init_table
-from config.scheduler import add_jobs, SchedulerConfig
+from config.scheduler import add_jobs
 from config.utils import login_user
 from models.posts import posts_by_num, count_num, render_list
 
