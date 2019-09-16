@@ -9,14 +9,14 @@ IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY OR FIT F
 PURPOSE.
 See the Mulan PSL v1 for more details.
 """
+from apps import crawler
 
 
 def add_jobs(scheduler):
-    scheduler.add_job(id="aps_test", func=aps_test, trigger='cron', second='*/5')
+    scheduler.add_job(id="sge_au99", func=crawler.sge_au99, trigger='cron', minute='*/5')
 
 
-def aps_test():
-    print("----")
+def sge_au99():
     """
           *                  any     Fire on every value
           */a               any     Fire every a values, starting from the minimum

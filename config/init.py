@@ -136,3 +136,24 @@ CREATE index IF NOT EXISTS app_comment_index_post_id on app_comment (post_id)
     run_sql('''
 CREATE index IF NOT EXISTS app_comment_index_reply_id on app_comment (reply_id)
     ''',())
+
+    # 创建 app_data
+    run_sql('''
+    CREATE TABLE IF NOT EXISTS app_data
+(
+    id INTEGER primary key autoincrement,
+    data_code TEXT,
+    data_date TEXT,
+    data_number TEXT,
+    create_user TEXT,
+    create_time TEXT
+)
+    ''', ())
+
+    # app_comment 索引
+    run_sql('''
+CREATE index IF NOT EXISTS app_data_index_data_code on app_data (data_code)
+    ''', ())
+    run_sql('''
+CREATE index IF NOT EXISTS app_data_index_data_date on app_data (data_date)
+    ''', ())
