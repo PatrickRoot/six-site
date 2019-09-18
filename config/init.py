@@ -157,3 +157,24 @@ CREATE index IF NOT EXISTS app_data_index_data_code on app_data (data_code)
     run_sql('''
 CREATE index IF NOT EXISTS app_data_index_data_date on app_data (data_date)
     ''', ())
+
+    # 创建 app_data
+    run_sql('''
+    CREATE TABLE IF NOT EXISTS app_notify_config
+(
+    id INTEGER primary key autoincrement,
+    notify_code TEXT,
+    notify_type TEXT,
+    notify_number INTEGER,
+    create_user TEXT,
+    create_time TEXT
+)
+    ''', ())
+
+    # app_comment 索引
+    run_sql('''
+CREATE index IF NOT EXISTS app_notify_config_index_notify_code on app_notify_config (notify_code)
+    ''', ())
+    run_sql('''
+CREATE index IF NOT EXISTS app_notify_config_index_notify_type on app_notify_config (notify_type)
+    ''', ())
