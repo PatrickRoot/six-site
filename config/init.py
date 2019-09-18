@@ -170,6 +170,7 @@ CREATE index IF NOT EXISTS app_data_index_data_date on app_data (data_date)
     create_time TEXT
 )
     ''', ())
+    # notify_type：100 单次涨幅 101 涨幅上限 200 单次跌幅 201 跌幅下限
 
     # app_comment 索引
     run_sql('''

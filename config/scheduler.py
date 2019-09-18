@@ -9,11 +9,12 @@ IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY OR FIT F
 PURPOSE.
 See the Mulan PSL v1 for more details.
 """
-from apps import crawler
+from apps import crawler, notify
 
 
 def add_jobs(scheduler):
     scheduler.add_job(id="sge_au99", func=crawler.sge_au99, trigger='cron', minute='*/5')
+    scheduler.add_job(id="notify_au99", func=notify.sge_au99, trigger='cron', minute='*/5')
 
 
 def sge_au99():

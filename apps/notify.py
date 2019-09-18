@@ -22,3 +22,7 @@ def notify_callback():
     json_data = json.loads(data)
     print(json_data)
     return "api"
+
+
+def sge_au99():
+    pass
