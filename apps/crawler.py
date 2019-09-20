@@ -28,3 +28,20 @@ def sge_au99():
         VALUES 
         ('Au99.99', current_timestamp, ?)
         ''', (number,))
+
+
+def content_fetcher():
+    # https://www.fastcompany.com/
+    # https://hbr.org/
+    # https://www.technologyreview.com/
+    # https://www.forbes.com/#6ca64e152254
+    #
+    pass
+
+
+def cn_en(str):
+    return str
+
+
+def en_cn(str):
+    return str

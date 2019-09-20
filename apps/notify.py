@@ -18,9 +18,8 @@ app_notify = Blueprint('app_notify', __name__)
 
 @app_notify.route("/callback")
 def notify_callback():
-    data = request.data
-    json_data = json.loads(data)
-    print(json_data)
+    data = request.get_json(force=True)
+    print(data)
     return "api"
 
 
