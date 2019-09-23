@@ -14,6 +14,7 @@ from flask_apscheduler import APScheduler
 
 from apps.api import app_api
 from apps.comments import app_comments
+from apps.notes import app_notes
 from apps.notify import app_notify
 from apps.posts import app_posts
 from apps.tags import app_tags
@@ -45,6 +46,7 @@ app.register_blueprint(app_thought, url_prefix='/thought')
 app.register_blueprint(app_thoughts, url_prefix='/thoughts')
 app.register_blueprint(app_comments, url_prefix='/comments')
 app.register_blueprint(app_notify, url_prefix='/notify')
+app.register_blueprint(app_notes, url_prefix='/notes')
 app.register_blueprint(app_users, url_prefix='/user')
 app.register_blueprint(app_api, url_prefix='/api')
 

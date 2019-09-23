@@ -179,3 +179,22 @@ CREATE index IF NOT EXISTS app_notify_config_index_notify_code on app_notify_con
     run_sql('''
 CREATE index IF NOT EXISTS app_notify_config_index_notify_type on app_notify_config (notify_type)
     ''', ())
+
+    # 创建 app_notes
+    run_sql('''
+    CREATE TABLE IF NOT EXISTS app_notes
+(
+    id INTEGER primary key autoincrement,
+    note_group TEXT,
+    note_content TEXT,
+    note_order INTEGER,
+    create_user TEXT,
+    create_time TEXT
+)
+    ''', ())
+    # notify_type：100 单次涨幅 101 涨幅上限 200 单次跌幅 201 跌幅下限
+
+    # app_comment 索引
+    run_sql('''
+CREATE index IF NOT EXISTS app_notes_index_note_group on app_notes (note_group)
+    ''', ())

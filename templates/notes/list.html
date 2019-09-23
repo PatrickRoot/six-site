@@ -1,0 +1,40 @@
+{% extends 'frame/index.html' %}
+
+{% block title %}{{ group_name }}{% endblock %}
+
+{% block keywords %}{{ group_name }},{% endblock %}
+
+{% block description %}{{ group_name }},{% endblock %}
+
+{% block header %}
+    <style type="text/css">
+        .ss-content-link{
+            width: 100%;
+            padding-left: 8%;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+{% endblock %}
+
+{% block main %}
+
+    <div class="email-content">
+        <div class="email-content-header">
+            <h1 class="email-content-title">
+                {{ group_name }}
+            </h1>
+        </div>
+
+        <div class="email-content-body">
+
+            {% for note_item in note_list %}
+                <p>{note_item.note_content}</p>
+            {% endfor %}
+
+        </div>
+
+    </div>
+{% endblock %}

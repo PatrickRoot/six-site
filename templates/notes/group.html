@@ -1,0 +1,55 @@
+{% extends 'frame/index.html' %}
+
+{% block title %}清单列表{% endblock %}
+
+{#{% block keywords %}six,{% endblock %}#}
+{##}
+{#{% block description %}six,{% endblock %}#}
+{##}
+{#{% block header %}#}
+{#    <style type="text/css">#}
+{##}
+{#    </style>#}
+{#{% endblock %}#}
+
+{% block main %}
+
+    {% for group_name in group_list %}
+        <div class="email-item pure-g">
+            <div class="pure-u">
+                <img width="64" height="64" class="email-avatar" src="{{ url_for('static', filename='number') }}/{{ loop.index }}.png">
+            </div>
+
+            <div class="pure-u-3-4">
+{#                <h5 class="email-name">{{ posts.create_time }} · <a href="{{ url_for('app_users.info', username=posts.create_user) }}">{{ posts.create_user }}</a></h5>#}
+                <a href="{{ url_for('app_notes.notes_list', group_name=group_name) }}"><h4 class="email-subject">{{ group_name }}</h4></a>
+{#                <p class="email-desc">#}
+{#                    {{ posts.post_summary }}-{{ posts.post_type }}#}
+{#                </p>#}
+            </div>
+        </div>
+    {% endfor %}
+
+{#    <div class="email-item pure-g">#}
+{#        <div class="email-content-controls">#}
+{#            {% if begin > 1 %}#}
+{#                <a href="{{ url_prefix }}1" class="secondary-button pure-button">1</a>#}
+{#                |#}
+{#            {% endif %}#}
+{#            {% for foo in range(begin,end) %}#}
+{#                {% if foo == page_no %}#}
+{#                    <a href="###" class="secondary-button pure-button" disabled="true">{{ foo }}</a>#}
+{#                {% else %}#}
+{#                    <a href="{{ url_prefix }}{{ foo }}" class="secondary-button pure-button">{{ foo }}</a>#}
+{#                {% endif %}#}
+{#            {% endfor %}#}
+{#            {% if end <= total_page %}#}
+{#                |#}
+{#                <a href="{{ url_prefix }}{{ total_page }}" class="secondary-button pure-button">{{ total_page }}</a>#}
+{#            {% endif %}#}
+{#                |#}
+{#                <a href="###" class="secondary-button pure-button" disabled="true">{{ total_num }}</a>篇#}
+{#        </div>#}
+{#    </div>#}
+
+{% endblock %}
