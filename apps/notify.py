@@ -9,7 +9,7 @@ IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY OR FIT F
 PURPOSE.
 See the Mulan PSL v1 for more details.
 """
-import json
+import traceback
 
 from flask import Blueprint, request
 
@@ -18,9 +18,13 @@ app_notify = Blueprint('app_notify', __name__)
 
 @app_notify.route("/callback")
 def notify_callback():
-    data = request.get_json(force=True)
-    print(data)
-    return "api"
+    try:
+        data = request.get_json(force=True)
+        print(data)
+    except Exception as e:
+        traceback.print_exc(e)
+
+    return "ok"
 
 
 def sge_au99():
