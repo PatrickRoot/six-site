@@ -9,12 +9,10 @@ IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY OR FIT F
 PURPOSE.
 See the Mulan PSL v1 for more details.
 """
-import os
 
-import markdown
-from flask import Blueprint, jsonify, request, render_template
+from flask import Blueprint, render_template
 
-from config.db import select_one, run_sql, select_list
+from config.db import select_list
 
 app_notes = Blueprint('app_notes', __name__)
 
@@ -37,7 +35,7 @@ def notes_group():
                            # total_page=total_page)
 
 
-@app_notes.route("/list/<str:group_name>")
+@app_notes.route("/list/<string:group_name>")
 def notes_list(group_name):
     note_list = select_list('''
     select *
