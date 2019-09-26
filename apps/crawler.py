@@ -19,7 +19,7 @@ def sge_au99():
     url = "https://www.sge.com.cn/sjzx/yshqbg"
     headers = {'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3899.0 Safari/537.36 Edg/78.0.275.0'}
     r = requests.get(url, headers=headers)
-    soup = BeautifulSoup(r.text)
+    soup = BeautifulSoup(str=r.text, features="html.parser")
     title = soup.select('div.memberName > table > tr:nth-child(2) > td:nth-child(1)')[0].text
     number = soup.select('div.memberName > table > tr:nth-child(2) > td:nth-child(2)')[0].text
     if title == "Au99.99":
