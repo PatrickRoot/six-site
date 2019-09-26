@@ -36,12 +36,12 @@ def notify_callback():
         data = request.get_json(force=True)
         print(data, file=sys.stdout)
 
-        if data['text'] == '/help':
+        if data['message']['text'] == '/help':
             if data['chat']['id'] in (624880292, 463360558):
                 send_my_help(data['chat']['id'])
 
     except Exception as e:
-        traceback.print_exc(e, file=sys.stderr)
+        traceback.print_exc(file=sys.stderr)
 
     return "ok"
 
