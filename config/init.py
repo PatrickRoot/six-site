@@ -198,3 +198,44 @@ CREATE index IF NOT EXISTS app_notify_config_index_notify_type on app_notify_con
     run_sql('''
 CREATE index IF NOT EXISTS app_notes_index_note_group on app_notes (note_group)
     ''', ())
+
+    run_sql('''
+    CREATE TABLE IF NOT EXISTS app_movies
+(
+    id INTEGER primary key autoincrement,
+    movie_name TEXT,
+    produce_year INTEGER,
+    director TEXT,
+    remark TEXT,
+    view_date TEXT,
+    cinema TEXT,
+    douban_key TEXT,
+    douban_score TEXT,
+    douban_info TEXT,
+    info_status TEXT,
+    create_user TEXT,
+    create_time TEXT
+)
+    ''', ())
+
+
+    run_sql('''
+    CREATE TABLE IF NOT EXISTS app_shows
+(
+    id INTEGER primary key autoincrement,
+    show_name TEXT,
+    show_season INTEGER,
+    show_episode INTEGER,
+    view_status TEXT,
+    tv TEXT,
+    remark TEXT,
+    douban_key TEXT,
+    douban_score TEXT,
+    douban_info TEXT,
+    info_status TEXT,
+    begin_date TEXT,
+    update_date TEXT,
+    create_user TEXT,
+    create_time TEXT
+)
+    ''', ())
