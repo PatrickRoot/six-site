@@ -16,7 +16,7 @@ from flask import Blueprint, request
 app_notify = Blueprint('app_notify', __name__)
 
 
-@app_notify.route("/callback")
+@app_notify.route("/callback", methods=['POST'])
 def notify_callback():
     try:
         data = request.get_json(force=True)
