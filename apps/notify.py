@@ -15,7 +15,7 @@ import traceback
 from flask import Blueprint, request
 
 from config.db import select_one
-from config.telegram import send_msg
+from config.tele import send_msg
 
 app_notify = Blueprint('app_notify', __name__)
 

@@ -9,18 +9,27 @@ IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY OR FIT F
 PURPOSE.
 See the Mulan PSL v1 for more details.
 """
-import requests
+import telegram
 
 from config.db import select_one
 
 
-def send_msg(chat_id, text):
+def set_token():
     site_config = select_one('''
     select * from site_config
     where config_key = ?
-    ''', ('telegram.url',))
+    ''', ('telegram.token',))
 
     if site_config:
-        url = site_config['config_val'] + '/sendMessage'
+        return telegram.Bot(token=site_config['config_val'])
 
-        resp = requests.post(url, data={'chat_id': chat_id, 'text': text})
+
+bot = set_token()
+
+
+def send_msg(chat_id, text):
+    bot.send_message(chat_id=chat_id, text=text)
+
+
+def send_btns(chat_id, text, btns):
+    bot.send_message(chat_id=chat_id, text=text)

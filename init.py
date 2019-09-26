@@ -37,4 +37,5 @@ def add_update_config(key, val, replace):
 if __name__ == '__main__':
     add_update_config("domain", "", False)
     add_update_config("telegram.url", "", False)
+    add_update_config("telegram.token", "", False)
     add_update_config("mine.help", "", False)
