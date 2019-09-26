@@ -37,8 +37,9 @@ def notify_callback():
         print(data, file=sys.stdout)
 
         if data['message']['text'] == '/help':
-            if data['chat']['id'] in (624880292, 463360558):
-                send_my_help(data['chat']['id'])
+            chat_id = data['message']['chat']['id']
+            if chat_id in (624880292, 463360558):
+                send_my_help(chat_id)
 
     except Exception as e:
         traceback.print_exc(file=sys.stderr)
