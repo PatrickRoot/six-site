@@ -26,7 +26,17 @@ def send_my_help(chat_id):
     from site_config
     where config_key = 'mine.help'
     ''', ())
-    send_msg(chat_id, site_config.config_val)
+    import json
+    print(json.dumps(site_config))
+    send_msg(chat_id, site_config['config_val'])
+
+
+def mine_message(data):
+    chat_id = data['message']['chat']['id']
+
+    if data['message']['text'] == '/help':
+        send_my_help(chat_id=chat_id)
+
 
 
 @app_notify.route("/callback", methods=['POST'])
@@ -36,10 +46,8 @@ def notify_callback():
         data = request.get_json(force=True)
         print(data, file=sys.stdout)
 
-        if data['message']['text'] == '/help':
-            chat_id = data['message']['chat']['id']
-            if chat_id in (624880292, 463360558):
-                send_my_help(chat_id)
+        if data['message']['chat']['id'] in (624880292, 463360558):
+            mine_message(data)
 
     except Exception as e:
         traceback.print_exc(file=sys.stderr)
