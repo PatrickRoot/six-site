@@ -24,7 +24,7 @@ def notify_callback():
         data = request.get_json(force=True)
         print(data, file=sys.stdout)
     except Exception as e:
-        traceback.print_exc(e)
+        traceback.print_exc(e, file=sys.stderr)
 
     return "ok"
 
