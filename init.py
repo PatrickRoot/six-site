@@ -9,7 +9,9 @@ IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY OR FIT F
 PURPOSE.
 See the Mulan PSL v1 for more details.
 """
-from config.db import select_one, run_sql
+import json
+
+from config.db import select_one, run_sql, select_list
 
 
 def add_update_config(key, val, replace):
@@ -39,3 +41,9 @@ if __name__ == '__main__':
     add_update_config("telegram.url", "", False)
     add_update_config("telegram.token", "", False)
     add_update_config("mine.help", "", False)
+
+    site_config = select_list('''
+    select *
+    from site_config
+    ''', ())
+    print(json.dumps(site_config))
