@@ -15,4 +15,4 @@ echo 'finish kill'
 
 source venv/bin/activate
 
-nohup python app.py -sixlab_site &
+nohup python -u app.py -sixlab_site >nohup.out 2>&1 &
