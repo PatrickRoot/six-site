@@ -14,15 +14,32 @@ import traceback
 
 from flask import Blueprint, request
 
+from config.db import select_one
+from config.telegram import send_msg
+
 app_notify = Blueprint('app_notify', __name__)
+
+
+def send_my_help(chat_id):
+    site_config = select_one('''
+    select *
+    from site_config
+    where config_key = 'mine.help'
+    ''', ())
+    send_msg(chat_id, site_config.config_val)
 
 
 @app_notify.route("/callback", methods=['POST'])
 def notify_callback():
     try:
-        print("-----", file=sys.stdout)
+        print("-----")
         data = request.get_json(force=True)
         print(data, file=sys.stdout)
+
+        if data['text'] == '/help':
+            if data['chat']['id'] in (624880292, 463360558):
+                send_my_help(data['chat']['id'])
+
     except Exception as e:
         traceback.print_exc(e, file=sys.stderr)
 

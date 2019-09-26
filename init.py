@@ -12,7 +12,7 @@ See the Mulan PSL v1 for more details.
 from config.db import select_one, run_sql
 
 
-def add_update_config(key, val):
+def add_update_config(key, val, replace):
     site_config = select_one('''
                   select *
                   from site_config
@@ -26,7 +26,7 @@ def add_update_config(key, val):
         VALUES 
         (?, ?);
         ''', (key, val))
-    else:
+    elif replace:
         run_sql('''
         UPDATE site_config 
         SET config_val = ?
@@ -35,5 +35,6 @@ def add_update_config(key, val):
 
 
 if __name__ == '__main__':
-    add_update_config("domain", "")
-    add_update_config("telegram.url", "")
+    add_update_config("domain", "", False)
+    add_update_config("telegram.url", "", False)
+    add_update_config("mine.help", "", False)
